@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="leo.com.runtimeauth.MainActivity">
+
+    <Button
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:text="申请打电话权限"
+            android:id="@+id/call_auth"
+    />
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:id="@+id/show_call_auth_resut"
+              android:text="result"
+              android:gravity="center_horizontal|center_vertical"
+              android:layout_below="@id/call_auth"/>
+
+
+    <Button
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:text="申请相机权限"
+            android:id="@+id/camera_auth"
+            android:layout_below="@id/show_call_auth_resut"
+    />
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:id="@+id/show_camera_auth_resut"
+              android:text="result"
+              android:gravity="center_horizontal|center_vertical"
+              android:layout_below="@id/camera_auth"/>
+
+</RelativeLayout>
