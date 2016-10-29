@@ -41,4 +41,20 @@
               android:gravity="center_horizontal|center_vertical"
               android:layout_below="@id/camera_auth"/>
 
+
+    <Button
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:text="悬浮窗"
+            android:id="@+id/alert_window_auth"
+            android:layout_below="@id/show_camera_auth_resut"
+    />
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:id="@+id/alert_window_auth_resut"
+              android:text="result"
+              android:gravity="center_horizontal|center_vertical"
+              android:layout_below="@id/alert_window_auth"/>
+
 </RelativeLayout>

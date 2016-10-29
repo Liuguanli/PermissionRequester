@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
 
@@ -29,3 +30,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
 }
+task makeJar(type: Copy) {
+    delete 'build/libs/mysdk.jar'
+    from('build/intermediates/bundles/release/')
+    into('build/libs/')
+    include('classes.jar')
+    rename ('classes.jar', 'mysdk.jar')
+}
+
+makeJar.dependsOn(build)

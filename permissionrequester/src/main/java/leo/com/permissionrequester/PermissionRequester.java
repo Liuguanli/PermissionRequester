@@ -25,6 +25,8 @@ import leo.com.permissionrequester.callback.PermissionRequestCallback;
 
 public class PermissionRequester {
 
+    private static final String TAG = "PermissionRequester";
+
     private static final int PERMISSIONS_REQUEST_CODE = 0;
     private static final int SYSTEM_ALERT_WINDOW_REQUEST_CODE = 1;
     private static final int WRITE_SETTINGS_REQUEST_CODE = 2;
@@ -71,7 +73,10 @@ public class PermissionRequester {
      *
      * @param requestedPermissionNames
      */
-    public void request(@NonNull String... requestedPermissionNames) {
+    public void request(String... requestedPermissionNames) {
+        if (requestedPermissionNames == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         if (requestedPermissionNames.length == 0) {
             return;
         }
@@ -111,7 +116,10 @@ public class PermissionRequester {
 
     }
 
-    public void requestAfterShowHint(@NonNull String permissionName) {
+    public void requestAfterShowHint(String permissionName) {
+        if (permissionName == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         if (isPermissionDenied(permissionName)) {
             realRequestPermissionMethod(permissionName);
         } else {
@@ -119,15 +127,24 @@ public class PermissionRequester {
         }
     }
 
-    public void realRequestPermissionMethod(@NonNull String... permissionNames) {
+    public void realRequestPermissionMethod(String... permissionNames) {
+        if (permissionNames == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         ActivityCompat.requestPermissions(context, permissionNames, PERMISSIONS_REQUEST_CODE);
     }
 
-    public boolean shouldShowRequestPermissionRationale(@NonNull String permissionName) {
+    public boolean shouldShowRequestPermissionRationale(String permissionName) {
+        if (permissionName == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         return ActivityCompat.shouldShowRequestPermissionRationale(context, permissionName);
     }
 
-    public boolean isPermissionDenied(@NonNull String permissionName) {
+    public boolean isPermissionDenied(String permissionName) {
+        if (permissionName == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         return ActivityCompat.checkSelfPermission(context, permissionName) != PackageManager.PERMISSION_GRANTED;
     }
 
@@ -138,7 +155,10 @@ public class PermissionRequester {
      *
      * @return
      */
-    public boolean checkPermission(@NonNull String permissionName) {
+    public boolean checkPermission(String permissionName) {
+        if (permissionName == null) {
+            throw new NullPointerException("permissionName can not be null");
+        }
         try {
             PackageInfo packageInfo =
                     context.getPackageManager()
@@ -177,10 +197,9 @@ public class PermissionRequester {
     public void requestSystemPermission(String permissionName) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             callback.onPermissionRequestGranted();
-        }
-        switch (permissionName) {
-            case SYSTEM_ALERT_WINDOW:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        } else {
+            switch (permissionName) {
+                case SYSTEM_ALERT_WINDOW:
                     if (Settings.canDrawOverlays(context)) {
                         callback.onPermissionRequestGranted(permissionName);
                     } else {
@@ -188,10 +207,8 @@ public class PermissionRequester {
                                 Uri.parse("package:" + context.getPackageName()));
                         context.startActivityForResult(intent, SYSTEM_ALERT_WINDOW_REQUEST_CODE);
                     }
-                }
-                break;
-            case WRITE_SETTINGS:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    break;
+                case WRITE_SETTINGS:
                     if (Settings.System.canWrite(context)) {
                         callback.onPermissionRequestGranted(permissionName);
                     } else {
@@ -199,9 +216,10 @@ public class PermissionRequester {
                                 Uri.parse("package:" + context.getPackageName()));
                         context.startActivityForResult(intent, WRITE_SETTINGS_REQUEST_CODE);
                     }
-                }
-                break;
-            default:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -209,6 +227,7 @@ public class PermissionRequester {
      * handle the result from Setting Page for the Special Permissions
      * {@link Activity#onActivityResult(int, int, Intent) }
      * <a>https://developer.android.com/guide/topics/security/permissions.html</a>
+     *
      * @param requestCode
      */
     public void onActivityForResult(int requestCode) {

@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button callAuth;
     private Button cameraAuth;
+    private Button alertWindowAuth;
+
     private TextView textView;
 
     PermissionRequester permissionRequester;
@@ -37,8 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         callAuth = (Button) findViewById(R.id.call_auth);
         cameraAuth = (Button) findViewById(R.id.camera_auth);
+        alertWindowAuth = (Button) findViewById(R.id.alert_window_auth);
         callAuth.setOnClickListener(this);
         cameraAuth.setOnClickListener(this);
+        alertWindowAuth.setOnClickListener(this);
         textView = (TextView) findViewById(R.id.show_call_auth_resut);
 
         permissionRequester = new PermissionRequester(this);
@@ -48,11 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.call_auth:
-                permissionRequester.setPermissionForceAccepted(true).showPreAskDialog(true)
-                        .request(Manifest.permission.CALL_PHONE);
+                permissionRequester.request(Manifest.permission.CALL_PHONE);
                 break;
             case R.id.camera_auth:
-
+//                permissionRequester.request(null);
+                break;
+            case R.id.alert_window_auth:
+                permissionRequester.request(Manifest.permission.SYSTEM_ALERT_WINDOW);
                 break;
             default:
                 break;
@@ -146,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onShowHintBeforeRequest(@NonNull String permissionName) {
         Log.i(TAG, "onShowHintBeforeRequest permissionName-> " + permissionName);
         Toast.makeText(MainActivity.this, "onShowHintBeforeRequest", Toast.LENGTH_LONG).show();
-        permissionRequester.requestAfterShowHint(permissionName);
+//        permissionRequester.requestAfterShowHint(permissionName);
     }
+
 }
